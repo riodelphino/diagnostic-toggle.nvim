@@ -4,6 +4,8 @@ A Neovim plugin that lets you switch between pre-configured diagnostic styles on
 
 I normally use a mixed layout with both `virtual_text` and `virtual_lines`, but sometimes I want to view only `virtual_lines` to read all messages clearly. Other times I need extra details like error IDs for searching online.
 
+If you're usin the built-in diagnostics, this might be a good option.
+
 
 ## Features
 
@@ -238,10 +240,14 @@ keys = {
 },
 ```
 
-
 ## TODO
 
 - [ ] Add `current_line`
 - [ ] Add `:DiagnosticToggle reset` sub-command
 - [ ] Add `lines` ?
+
+
+## Related Projects
+
+- [folke/trouble.nvim](https://github.com/folke/trouble.nvim)
 
