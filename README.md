@@ -15,6 +15,13 @@ You can toggle these aspects independently:
 - Format — How diagnostic messages are displayed
 - Severity — Which severities are shown
 
+## Movies and Screenshots
+
+[!Toggle style:](https://github.com/user-attachments/assets/76518e4e-f463-479f-af25-3d3e5eefa86f)
+
+[!Toggle format:](https://github.com/user-attachments/assets/7e4265aa-4fa1-4111-8d50-0662810eff1c)
+
+[!Toggle severity:](https://github.com/user-attachments/assets/ba1ff3cf-30d8-4de4-9df9-513e565218de)
 
 ## Config
 
