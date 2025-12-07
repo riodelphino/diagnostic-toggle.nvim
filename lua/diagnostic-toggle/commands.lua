@@ -1,4 +1,5 @@
 local core = require("diagnostic-toggle.core")
+local util = require("diagnostic-toggle.util")
 local config = require("diagnostic-toggle.config")
 
 local M = {}
@@ -18,7 +19,13 @@ function M.add_commands()
     elseif subcommand == "severity" then
       core.toggle_severity(value)
     else
-      vim.notify("Usage: DiagnosticToggle {style|format|severity} [value]", vim.log.levels.ERROR)
+      local msg = [[
+Usage:
+  DiagnosticToggle {style|format|severity}
+  or
+  DiagnosticToggle {style|format|severity} [value]
+]]
+      util.notify(msg, "WARN")
     end
   end, {
     nargs = "+",

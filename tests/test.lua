@@ -1,28 +1,31 @@
--- hint
+-- HINT
 local result = 100
 
--- warn
+-- INFO
+-- Add code for INFO here
+
+-- WARN
 vim.fn.fnamemodify('/path/to/file')
 
--- warn x 2
+-- WARN + WARN
 local a = a; local b = b
 print(a, b)
 
--- warn + hint
+-- WARN + HINT
 local c = c; local c = c
 print(c)
 
--- error
+-- ERROR
 local x
 if x != "text" then
   print(x)
 end
 
--- warn + error
+-- WARN + ERROR
 local y
 if y != "text" then end
 
--- error x 2
+-- ERROR + ERROR
 if y != "text" and y = y + 1 then
   print(y)
 end
