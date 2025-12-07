@@ -40,8 +40,6 @@ Diagnostic config:
 ```lua
 ---@class vim.diagnostic.Opts
 vim.diagnostic.config({
-  -- Other config here
-  ...
   -- Followings are overwritten
   virtual_text = false,
   virtual_lines = false,
@@ -58,34 +56,44 @@ local defaults = {
     format = "short", -- Default format name
     severity = "all", -- Default severity name
   },
-  toggle = {
-    -- Toggle sequence maps. Example: when current is 'both', next will be 'text'
+  sequences = { -- Toggle sequence maps. Example: when current is 'both', next will be 'text'
     styles = { both = "text", text = "lines", lines = "both" },  -- both -> text -> lines -> both
     formats = { short = "long", long = "short" }, -- short <-> long
-    severities = { all = "hint", hint = "info", info = "warn", warn = "error", error = "all" }, -- all -> info -> warn -> error -> all
+    severities = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" },, -- all -> info~ -> warn~ -> error~ -> all
+  },
+  notify = { -- Notify settings
+    enabled = true, -- Enable notify
+    on_setup = false, -- Eneable notify on setup()
+    on_toggle = {
+      style = true, -- Enable notify on toggling style
+      format = true, -- Enable notify on toggling format
+      severity = true, -- Enable notify on toggling severity
+    },
   },
   styles = { -- `style` presets
     both = { -- Mixed style: Shows virtual_text for HINT/INFO/WARN. Shows virtual_lines for ERROR.
       virtual_text = {
-        format = M.get_format(),
-        severity = { max = vim.diagnostic.severity.WARN },
+        format = "dynamic" -- Set "dynamic" to toggle on the fly
+        severity = { max = vim.diagnostic.severity.WARN }, -- Fixed severity
       },
       virtual_lines = {
-        format = M.get_format(),
+        format = "dynamic"
         severity = { min = vim.diagnostic.severity.ERROR },
       },
-      float = false,
+      float = false, -- Set false to disable
     },
     lines = { -- A style with virtual_lines only
       virtual_text = false,
       virtual_lines = {
-        format = M.get_format(),
+        format = "dynamic",
+        severity = "dynamic",
       },
       float = false,
     },
     text = { -- A style with virtual_text only
       virtual_text = {
-        format = M.get_format(),
+        format = "dynamic",
+        severity = "dynamic",
       },
       virtual_lines = false,
       float = false,
@@ -102,42 +110,26 @@ local defaults = {
     -- Add your format presets here
   },
   severities = { -- `severity` presets
-    all = { min = { vim.diagnostic.severity.HINT } }, -- A severity preset shows all
-    info = { min = { vim.diagnostic.severity.INFO } }, -- A severity preset shows INFO, WARN, ERROR
-    warn = { min = { vim.diagnostic.severity.WARN } }, -- A severity preset shows WARN, ERROR
-    error = { min = { vim.diagnostic.severity.ERROR } }, -- A severity preset shows only ERROR
+    all = { min = { vim.diagnostic.severity.HINT } }, -- Shows all
+    ["info~"] = { min = { vim.diagnostic.severity.INFO } }, -- Shows INFO, WARN, ERROR
+    ["warn~"] = { min = { vim.diagnostic.severity.WARN } }, -- Shows WARN, ERROR
+    ["error~"] = { min = { vim.diagnostic.severity.ERROR } }, -- Shows only ERROR
     -- Add your severity presets here
   },
 }
 ```
-> [!Warning]
-> `M.get_format()` should be replaced with `require('diagnostic-toggle.config').get_format()` in your config.
-> See below section.
 
+### Enable Toggling
 
-### Dynamic Toggling for format and severity
-
-To use dynamic toggling for `format` and `severity` in your config, use following two functions:
+Use `"dynamic"` for toggling `format` and `severity` in your config
 ```lua
-require('diagnostic-toggle.config').get_format()
-require('diagnostic-toggle.config').get_severity()
-```
-
-(e.g.)
-```lua
-local config = require('diagnostic-toggle.config')
 require('diagnostic-toggle').setup({
   styles = {
     your_style = {
       virtual_text = {
-        format = config.get_format(), -- Set format dynamically
-        severity = config.get_severity(), -- Set severity dynamically
+        format = "dynamic", -- Allow toggling format on the fly
+        severity = "dynamic", -- Allow toggling severity on the fly
       },
-      virtual_lines = {
-        format = config.get_format(),
-        severity = config.get_severity(),
-      },
-      float = false,
     },
   },
 })
@@ -150,7 +142,7 @@ To disable specific field, use `false` instead of `nil`:
 require('diagnostic-toggle').setup({
   styles = {
     your_style = {
-      virtual_text = { format = M.get_format() },
+      virtual_text = { format = "dynamic" },
       virtual_lines = false, -- Disabled
       float = false, -- Disabled
     },
