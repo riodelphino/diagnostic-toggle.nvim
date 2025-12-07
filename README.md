@@ -18,7 +18,7 @@ You can toggle these aspects independently:
 
 ## Config
 
-### Minimum Setup
+### Minimal Setup
 
 lazy.nvim:
 ```lua
