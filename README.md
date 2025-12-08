@@ -181,7 +181,6 @@ Toggle presets:
 | `:DiagnosticToggle format`        | Toggle `format`        |
 | `:DiagnosticToggle severity`      | Toggle `severity`      |
 | `:DiagnosticToggle current_line`  | Toggle `current_line`  |
-| `:DiagnosticToggle reset`         | Reset to defaults      |
 
 Set a specific preset:
 | Command                                              | Description                               |
@@ -190,6 +189,11 @@ Set a specific preset:
 | `:DiagnosticToggle format {format_name}`             | Set format to `{format_name}`             |
 | `:DiagnosticToggle severity {severity_name}`         | Set severity to `{severity_name}`         |
 | `:DiagnosticToggle current_line {current_line_name}` | Set current_line to `{current_line_name}` |
+
+Reset to defaults:
+| Command                           | Description            |
+| --------------------------------- | ---------------------- |
+| `:DiagnosticToggle reset`         | Reset to defaults      |
 
 Completion works for sub-commands and preset names.
 
@@ -219,35 +223,41 @@ core.toggle_severity('warn')     -- Set severity to `warn`
 core.toggle_current_line('true') -- Set current_line to `true`
 ```
 
+Reset to defaults:
+```lua
+local core = require('diagnostic-toggle.core')
+core.reset() -- Reset to defaults
+```
+
 ## Keymaps
 
 Recommended keymaps for lazy.nvim:
 ```lua
 keys = {
-  { 'gtt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
-  { 'gts', ':DiagnosticToggle style<cr>', desc = 'Diagnostic toggle - style', silent = true },
-  { 'gtf', ':DiagnosticToggle format<cr>', desc = 'Diagnostic toggle - format', silent = true },
-  { 'gtv', ':DiagnosticToggle severity<cr>', desc = 'Diagnostic toggle - severity', silent = true },
-  { 'gtc', ':DiagnosticToggle current_line<cr>', desc = 'Diagnostic toggle - current_line', silent = true },
-  { 'gtr', ':DiagnosticToggle reset<cr>', desc = 'Diagnostic reset to defaults', silent = true },
+  { 'glt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
+  { 'gls', ':DiagnosticToggle style<cr>', desc = 'Diagnostic toggle - style', silent = true },
+  { 'glf', ':DiagnosticToggle format<cr>', desc = 'Diagnostic toggle - format', silent = true },
+  { 'glv', ':DiagnosticToggle severity<cr>', desc = 'Diagnostic toggle - severity', silent = true },
+  { 'glc', ':DiagnosticToggle current_line<cr>', desc = 'Diagnostic toggle - current_line', silent = true },
+  { 'glr', ':DiagnosticToggle reset<cr>', desc = 'Diagnostic reset to defaults', silent = true },
 },
 ```
 
 Equivalent keymaps with API:
 ```lua
 keys = {
-  { 'gtt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
-  { 'gts', function() require('diagnostic-toggle.core').toggle_style() end, desc = 'Diagnostic toggle - style' },
-  { 'gtf', function() require('diagnostic-toggle.core').toggle_format() end, desc = 'Diagnostic toggle - format' },
-  { 'gtv', function() require('diagnostic-toggle.core').toggle_severity() end, desc = 'Diagnostic toggle - severity' },
-  { 'gtc', function() require('diagnostic-toggle.core').toggle_current_line() end, desc = 'Diagnostic toggle - current_line' },
-  { 'gtr', function() require('diagnostic-toggle.core').reset() end, desc = 'Diagnostic reset to defaults' },
+  { 'glt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
+  { 'gls', function() require('diagnostic-toggle.core').toggle_style() end, desc = 'Diagnostic toggle - style' },
+  { 'glf', function() require('diagnostic-toggle.core').toggle_format() end, desc = 'Diagnostic toggle - format' },
+  { 'glv', function() require('diagnostic-toggle.core').toggle_severity() end, desc = 'Diagnostic toggle - severity' },
+  { 'glc', function() require('diagnostic-toggle.core').toggle_current_line() end, desc = 'Diagnostic toggle - current_line' },
+  { 'glr', function() require('diagnostic-toggle.core').reset() end, desc = 'Diagnostic reset to defaults' },
 },
 ```
 
 ## TODO
 
-- [ ] Is `gt*` keymap proper?
+- [ ] ...
 
 
 ## Similar Plugins
