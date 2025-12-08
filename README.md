@@ -14,9 +14,10 @@ If you're usin the built-in diagnostics, this might be a good option.
 
 You can toggle these aspects independently:
 
-- Style — Presets combining virtual_text|virtual_lines|float diagnostics
+- Style — Presets combining `virtual_text`|`virtual_lines`|`float` diagnostics
 - Format — How diagnostic messages are displayed
 - Severity — Which severities are shown
+- current_line — Whether to show diagnostics only on the cursor line
 
 ## Movies and Screenshots
 
