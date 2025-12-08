@@ -1,5 +1,8 @@
 # diagnostic-toggle.nvim
 
+> [!Caution]
+> This plugin is in early development. Breaking changes are possible.
+
 A Neovim plugin that lets you switch between pre-configured diagnostic styles on the fly.
 
 I normally use a mixed layout with both `virtual_text` and `virtual_lines`, but sometimes I want to view only `virtual_lines` to read all messages clearly. Other times I need extra details like error IDs for searching online.
@@ -80,11 +83,11 @@ local defaults = {
   styles = { -- `style` presets
     both = { -- Mixed style: Shows virtual_text for HINT/INFO/WARN. Shows virtual_lines for ERROR.
       virtual_text = {
-        format = "dynamic" -- Set "dynamic" to toggle on the fly
-        severity = { max = vim.diagnostic.severity.WARN }, -- Fixed severity
+        format = "auto" -- Set "auto" to toggle on the fly
+        severity = { max = vim.diagnostic.severity.WARN }, -- Fixed severity is also available.
       },
       virtual_lines = {
-        format = "dynamic"
+        format = "auto"
         severity = { min = vim.diagnostic.severity.ERROR },
       },
       float = false, -- Set false to disable
@@ -92,15 +95,15 @@ local defaults = {
     lines = { -- A style with virtual_lines only
       virtual_text = false,
       virtual_lines = {
-        format = "dynamic",
-        severity = "dynamic",
+        format = "auto",
+        severity = "auto",
       },
       float = false,
     },
     text = { -- A style with virtual_text only
       virtual_text = {
-        format = "dynamic",
-        severity = "dynamic",
+        format = "auto",
+        severity = "auto",
       },
       virtual_lines = false,
       float = false,
@@ -128,14 +131,14 @@ local defaults = {
 
 ### Enable Toggling
 
-Use `"dynamic"` for toggling `format` and `severity` in your config
+Use `"auto"` for toggling `format` and `severity` in your config
 ```lua
 require('diagnostic-toggle').setup({
   styles = {
     your_style = {
       virtual_text = {
-        format = "dynamic", -- Allow toggling format on the fly
-        severity = "dynamic", -- Allow toggling severity on the fly
+        format = "auto", -- Allow toggling format on the fly
+        severity = "auto", -- Allow toggling severity on the fly
       },
     },
   },
@@ -149,7 +152,7 @@ To disable specific field, use `false` instead of `nil`:
 require('diagnostic-toggle').setup({
   styles = {
     your_style = {
-      virtual_text = { format = "dynamic" },
+      virtual_text = { format = "auto" },
       virtual_lines = false, -- Disabled
       float = false, -- Disabled
     },
@@ -243,7 +246,7 @@ keys = {
 
 - [ ] Add `current_line`
 - [ ] Add `:DiagnosticToggle reset` sub-command
-- [ ] Add `lines` ?
+- [ ] Is `gt*` keymap proper?
 
 
 ## Related Projects

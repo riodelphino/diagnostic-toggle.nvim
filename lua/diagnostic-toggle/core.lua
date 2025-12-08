@@ -48,10 +48,10 @@ function M.apply_diagnostic_config()
   -- Replace format and severity dynamically
   for _, target in ipairs({ "virtual_text", "virtual_lines", "float" }) do
     if style[target] then
-      if style[target].format and style[target].format == "dynamic" then
+      if style[target].format and style[target].format == "auto" then
         style[target].format = opts.formats[opts.current.format]
       end
-      if style[target].severity and style[target].severity == "dynamic" then
+      if style[target].severity and style[target].severity == "auto" then
         style[target].severity = opts.severities[opts.current.severity]
       end
     end

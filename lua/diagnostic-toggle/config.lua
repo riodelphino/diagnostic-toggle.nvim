@@ -23,11 +23,11 @@ local defaults = {
   styles = {
     both = {
       virtual_text = {
-        format = "dynamic",
+        format = "auto",
         severity = { max = vim.diagnostic.severity.WARN },
       },
       virtual_lines = {
-        format = "dynamic",
+        format = "auto",
         severity = { min = vim.diagnostic.severity.ERROR },
       },
       float = false,
@@ -35,15 +35,15 @@ local defaults = {
     lines = {
       virtual_text = false,
       virtual_lines = {
-        format = "dynamic",
-        severity = "dynamic",
+        format = "auto",
+        severity = "auto",
       },
       float = false,
     },
     text = {
       virtual_text = {
-        format = "dynamic",
-        severity = "dynamic",
+        format = "auto",
+        severity = "auto",
       },
       virtual_lines = false,
       float = false,
