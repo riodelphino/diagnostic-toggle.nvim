@@ -250,7 +250,19 @@ keys = {
 - [ ] Is `gt*` keymap proper?
 
 
-## Related Projects
+## Similar Plugins
 
-- [folke/trouble.nvim](https://github.com/folke/trouble.nvim)
+- [xray.nvim](https://github.com/sfn101/xray.nvim)
+- [trouble.nvim](https://github.com/folke/trouble.nvim)
+- [tiny-inline-diagnostic.nvim](https://github.com/rachartier/tiny-inline-diagnostic.nvim)
+
+
+## Contributing
+
+Contributions welcome! Please open an issue or PR.
+
+
+## License
+
+MIT License - see LICENSE file for details
 
