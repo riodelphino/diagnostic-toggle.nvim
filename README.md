@@ -193,7 +193,7 @@ Completion works for sub-commands and preset names.
 
 ## API
 
-Equivalant functions are available.
+Equivalent functions are available.
 
 Toggle presets:
 ```lua
@@ -228,7 +228,7 @@ keys = {
 },
 ```
 
-Same keymaps with API:
+Equivalent keymaps with API:
 ```lua
 keys = {
   { 'gtt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
