@@ -2,6 +2,7 @@ local M = {}
 
 M = {
   is_setup = false,
+  is_toggle = false, -- Not used
   current = {
     style = nil,
     format = nil,
