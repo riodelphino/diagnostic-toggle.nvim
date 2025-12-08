@@ -3,13 +3,13 @@ local M = {}
 local defaults = {
   defaults = {
     style = "text_and_lines",
-    format = "short",
+    format = "simple",
     severity = "all",
     current_line = "false",
   },
   sequences = {
     style = { text_and_lines = "only_text", only_text = "only_lines", only_lines = "text_and_lines" },
-    format = { short = "long", long = "short" },
+    format = { simple = "detailed", detailed = "simple" },
     severity = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" },
     current_line = { ["false"] = "true", ["true"] = "false" },
   },
@@ -59,8 +59,8 @@ local defaults = {
       },
     },
     formats = {
-      short = function(diagnostic) return string.format("%s", diagnostic.message) end,
-      long = function(diagnostic)
+      simple = function(diagnostic) return string.format("%s", diagnostic.message) end,
+      detailed = function(diagnostic)
         return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
       end,
     },

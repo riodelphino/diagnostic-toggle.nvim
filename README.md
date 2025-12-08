@@ -64,13 +64,13 @@ vim.diagnostic.config({
 local defaults = {
   defaults = {
     style = "text_and_lines", -- Default style name
-    format = "short", -- Default format name
+    format = "simple", -- Default format name
     severity = "all", -- Default severity name
     current_line = "false", -- Default current_line name
   },
   sequences = { -- Toggle sequence maps
     style = { text_and_lines = "only_text", only_text = "only_lines", only_lines = "text_and_lines" }, -- text_and_lines -> only_text -> only_lines -> text_and_lines
-    format = { short = "long", long = "short" }, -- short <-> long
+    format = { simple = "detailed", detailed = "simple" }, -- simple <-> detailed
     severitie = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" }, -- all -> info~ -> warn~ -> error~ -> all
     current_line = { ["false"] = "true", ["true"] = "false" }, -- false -> true -> false
   },
@@ -116,11 +116,11 @@ local defaults = {
       -- Add your style presets here
     },
     formats = { -- `format` presets
-      short = function(diagnostic)
+      simple = function(diagnostic)
         return string.format("%s", diagnostic.message)
       end,
-      long = function(diagnostic)
-        return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+      detailed = function(diagnostic)
+        return string.format("%s [%s: %s]", diagnostic.message, diagnostic.source, diagnostic.code)
       end,
       -- Add your format presets here
     },
@@ -218,7 +218,7 @@ Set a specific preset:
 local core = require('diagnostic-toggle.core')
 
 core.toggle_style('lines')       -- Set style to `lines`
-core.toggle_format('long')       -- Set foramt to `long`
+core.toggle_format('detailed')   -- Set foramt to `detailed`
 core.toggle_severity('warn')     -- Set severity to `warn`
 core.toggle_current_line('true') -- Set current_line to `true`
 ```
