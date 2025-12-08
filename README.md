@@ -169,37 +169,25 @@ require('diagnostic-toggle').setup({
 })
 ```
 
-## Usage
+## Commands
 
-Toggle between presets:
-```vim
-" Toggle style
-:DiagnosticToggle style
+Toggle presets:
+| Command                           | Description            |
+| --------------------------------- | ---------------------- |
+| `:DiagnosticToggle {sub_command}` | Toggle `{sub_command}` |
+| `:DiagnosticToggle style`         | Toggle `style`         |
+| `:DiagnosticToggle format`        | Toggle `format`        |
+| `:DiagnosticToggle severity`      | Toggle `severity`      |
+| `:DiagnosticToggle current_line`  | Toggle `current_line`  |
 
-" Toggle format
-:DiagnosticToggle format
+Set a specific preset:
+| Command                                              | Description                               |
+| ---------------------------------------------------- | ----------------------------------------- |
+| `:DiagnosticToggle style {style_name}`               | Set style to `{style_name}`               |
+| `:DiagnosticToggle format {format_name}`             | Set format to `{format_name}`             |
+| `:DiagnosticToggle severity {severity_name}`         | Set severity to `{severity_name}`         |
+| `:DiagnosticToggle current_line {current_line_name}` | Set current_line to `{current_line_name}` |
 
-" Toggle severity
-:DiagnosticToggle severity
-
-" Toggle current_line
-:DiagnosticToggle current_line
-```
-
-Specify a existing preset:
-```vim
-" Toggle style to `lines
-:DiagnosticToggle style lines
-
-" Toggle format to `long`
-:DiagnosticToggle format long
-
-" Toggle severity to `warn`
-:DiagnosticToggle severity warn
-
-" Toggle current_line to `true`
-:DiagnosticToggle current_line true
-```
 Completion works for sub-commands and preset names.
 
 
@@ -267,7 +255,7 @@ keys = {
 
 ## TODO
 
-- [ ] Add `:DiagnosticToggle reset` sub-command
+- [ ] Add `:DiagnosticToggle defaults` sub-command
 - [ ] Is `gt*` keymap proper?
 
 
