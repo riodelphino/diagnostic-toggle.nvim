@@ -14,7 +14,7 @@ function M.notify(msg, level_name, notify_opts)
   vim.notify(msg, vim.log.levels[level_name], notify_opts)
 end
 
----@param target "style"|"format"|"severity"
+---@param target "style"|"format"|"severity"|"current_line"
 function M.notify_on_toggle(target, current_value)
   local opts = require("diagnostic-toggle.config").options
   if not opts.notify.on_toggle[target] then return end

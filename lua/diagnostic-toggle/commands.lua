@@ -18,6 +18,8 @@ function M.add_commands()
       core.toggle_format(value)
     elseif subcommand == "severity" then
       core.toggle_severity(value)
+    elseif subcommand == "current_line" then
+      core.toggle_current_line(value)
     else
       local msg = [[
 Usage:
@@ -34,20 +36,22 @@ Usage:
 
       if #args <= 1 then
         vim.notify(cmdline, vim.log.levels.INFO)
-        return { "style", "format", "severity" }
+        return { "style", "format", "severity", "current_line" }
       end
 
       if #args == 2 then
         vim.notify(cmdline, vim.log.levels.INFO)
         local subcommand = args[2]
-        local opts = config.options
+        local presets = config.options.presets
 
         if subcommand == "style" then
-          return vim.tbl_keys(opts.styles)
+          return vim.tbl_keys(presets.styles)
         elseif subcommand == "format" then
-          return vim.tbl_keys(opts.formats)
+          return vim.tbl_keys(presets.formats)
         elseif subcommand == "severity" then
-          return vim.tbl_keys(opts.severities)
+          return vim.tbl_keys(presets.severities)
+        elseif subcommand == "current_line" then
+          return vim.tbl_keys(presets.current_lines)
         end
       end
 

@@ -16,6 +16,7 @@ function M.setup(opts)
   core.toggle_style(defaults.style)
   core.toggle_format(defaults.format)
   core.toggle_severity(defaults.severity)
+  core.toggle_current_line(defaults.current_line)
 
   require("diagnostic-toggle.commands").add_commands()
 

@@ -5,11 +5,13 @@ local defaults = {
     style = "both",
     format = "short",
     severity = "all",
+    current_line = "false",
   },
   sequences = {
-    styles = { both = "text", text = "lines", lines = "both" },
-    formats = { short = "long", long = "short" },
-    severities = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" },
+    style = { both = "text", text = "lines", lines = "both" },
+    format = { short = "long", long = "short" },
+    severity = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" },
+    current_line = { ["false"] = "true", ["true"] = "false" },
   },
   notify = {
     enabled = true,
@@ -18,48 +20,59 @@ local defaults = {
       style = true,
       format = true,
       severity = true,
+      current_line = true,
     },
   },
-  styles = {
-    both = {
-      virtual_text = {
-        format = "auto",
-        severity = { max = vim.diagnostic.severity.WARN },
+  presets = {
+    styles = {
+      both = {
+        virtual_text = {
+          format = "auto",
+          severity = { max = vim.diagnostic.severity.WARN },
+          current_line = "auto",
+        },
+        virtual_lines = {
+          format = "auto",
+          severity = { min = vim.diagnostic.severity.ERROR },
+          current_line = "auto",
+        },
+        float = false,
       },
-      virtual_lines = {
-        format = "auto",
-        severity = { min = vim.diagnostic.severity.ERROR },
+      lines = {
+        virtual_text = false,
+        virtual_lines = {
+          format = "auto",
+          severity = "auto",
+          current_line = "auto",
+        },
+        float = false,
       },
-      float = false,
+      text = {
+        virtual_text = {
+          format = "auto",
+          severity = "auto",
+          current_line = "auto",
+        },
+        virtual_lines = false,
+        float = false,
+      },
     },
-    lines = {
-      virtual_text = false,
-      virtual_lines = {
-        format = "auto",
-        severity = "auto",
-      },
-      float = false,
+    formats = {
+      short = function(diagnostic) return string.format("%s", diagnostic.message) end,
+      long = function(diagnostic)
+        return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+      end,
     },
-    text = {
-      virtual_text = {
-        format = "auto",
-        severity = "auto",
-      },
-      virtual_lines = false,
-      float = false,
+    severities = {
+      all = { min = vim.diagnostic.severity.HINT },
+      ["info~"] = { min = vim.diagnostic.severity.INFO },
+      ["warn~"] = { min = vim.diagnostic.severity.WARN },
+      ["error~"] = { min = vim.diagnostic.severity.ERROR },
     },
-  },
-  formats = {
-    short = function(diagnostic) return string.format("%s", diagnostic.message) end,
-    long = function(diagnostic)
-      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
-    end,
-  },
-  severities = {
-    all = { min = vim.diagnostic.severity.HINT },
-    ["info~"] = { min = vim.diagnostic.severity.INFO },
-    ["warn~"] = { min = vim.diagnostic.severity.WARN },
-    ["error~"] = { min = vim.diagnostic.severity.ERROR },
+    current_lines = {
+      ["true"] = true,
+      ["false"] = false,
+    },
   },
 }
 

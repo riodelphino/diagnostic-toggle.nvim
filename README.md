@@ -62,14 +62,16 @@ vim.diagnostic.config({
 ```lua
 local defaults = {
   defaults = {
-    style = "both",   -- Default style name
+    style = "both", -- Default style name
     format = "short", -- Default format name
     severity = "all", -- Default severity name
+    current_line = "false", -- Default current_line name
   },
   sequences = { -- Toggle sequence maps. Example: when current is 'both', next will be 'text'
-    styles = { both = "text", text = "lines", lines = "both" },  -- both -> text -> lines -> both
-    formats = { short = "long", long = "short" }, -- short <-> long
-    severities = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" },, -- all -> info~ -> warn~ -> error~ -> all
+    style = { both = "text", text = "lines", lines = "both" },  -- both -> text -> lines -> both
+    format = { short = "long", long = "short" }, -- short <-> long
+    severitie = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" }, -- all -> info~ -> warn~ -> error~ -> all
+    current_line = { ["false"] = "true", ["true"] = "false" }, -- false -> true -> false
   },
   notify = { -- Notify settings
     enabled = true, -- Enable notify
@@ -80,51 +82,57 @@ local defaults = {
       severity = true, -- Enable notify on toggling severity
     },
   },
-  styles = { -- `style` presets
-    both = { -- Mixed style: Shows virtual_text for HINT/INFO/WARN. Shows virtual_lines for ERROR.
-      virtual_text = {
-        format = "auto" -- Set "auto" to toggle on the fly
-        severity = { max = vim.diagnostic.severity.WARN }, -- Fixed severity is also available.
+  presets = {
+    styles = { -- `style` presets
+      both = { -- Mixed style: Shows virtual_text for HINT/INFO/WARN. Shows virtual_lines for ERROR.
+        virtual_text = {
+          format = "auto" -- Set "auto" to toggle on the fly
+          severity = { max = vim.diagnostic.severity.WARN }, -- Fixed severity is also available.
+        },
+        virtual_lines = {
+          format = "auto"
+          severity = { min = vim.diagnostic.severity.ERROR },
+        },
+        float = false, -- Set false to disable
       },
-      virtual_lines = {
-        format = "auto"
-        severity = { min = vim.diagnostic.severity.ERROR },
+      lines = { -- A style with virtual_lines only
+        virtual_text = false,
+        virtual_lines = {
+          format = "auto",
+          severity = "auto",
+        },
+        float = false,
       },
-      float = false, -- Set false to disable
+      text = { -- A style with virtual_text only
+        virtual_text = {
+          format = "auto",
+          severity = "auto",
+        },
+        virtual_lines = false,
+        float = false,
+      },
+      -- Add your style presets here
     },
-    lines = { -- A style with virtual_lines only
-      virtual_text = false,
-      virtual_lines = {
-        format = "auto",
-        severity = "auto",
-      },
-      float = false,
+    formats = { -- `format` presets
+      short = function(diagnostic)
+        return string.format("%s", diagnostic.message)
+      end,
+      long = function(diagnostic)
+        return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+      end,
+      -- Add your format presets here
     },
-    text = { -- A style with virtual_text only
-      virtual_text = {
-        format = "auto",
-        severity = "auto",
-      },
-      virtual_lines = false,
-      float = false,
+    severities = { -- `severity` presets
+      all = { min = { vim.diagnostic.severity.HINT } }, -- Shows all
+      ["info~"] = { min = { vim.diagnostic.severity.INFO } }, -- Shows INFO, WARN, ERROR
+      ["warn~"] = { min = { vim.diagnostic.severity.WARN } }, -- Shows WARN, ERROR
+      ["error~"] = { min = { vim.diagnostic.severity.ERROR } }, -- Shows only ERROR
+      -- Add your severity presets here
     },
-    -- Add your style presets here
-  },
-  formats = { -- `format` presets
-    short = function(diagnostic)
-      return string.format("%s", diagnostic.message)
-    end,
-    long = function(diagnostic)
-      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
-    end,
-    -- Add your format presets here
-  },
-  severities = { -- `severity` presets
-    all = { min = { vim.diagnostic.severity.HINT } }, -- Shows all
-    ["info~"] = { min = { vim.diagnostic.severity.INFO } }, -- Shows INFO, WARN, ERROR
-    ["warn~"] = { min = { vim.diagnostic.severity.WARN } }, -- Shows WARN, ERROR
-    ["error~"] = { min = { vim.diagnostic.severity.ERROR } }, -- Shows only ERROR
-    -- Add your severity presets here
+    current_lines = { -- `severity` presets (No need to modify)
+      ["true"] = true,
+      ["false"] = false,
+    },
   },
 }
 ```
@@ -139,6 +147,7 @@ require('diagnostic-toggle').setup({
       virtual_text = {
         format = "auto", -- Allow toggling format on the fly
         severity = "auto", -- Allow toggling severity on the fly
+        current_line = "auto", -- Allow toggling current_line on the fly
       },
     },
   },
@@ -172,6 +181,9 @@ Toggle between presets:
 
 " Toggle severity
 :DiagnosticToggle severity
+
+" Toggle current_line
+:DiagnosticToggle current_line
 ```
 
 Specify a existing preset:
@@ -184,6 +196,9 @@ Specify a existing preset:
 
 " Toggle severity to `warn`
 :DiagnosticToggle severity warn
+
+" Toggle current_line to `true`
+:DiagnosticToggle current_line true
 ```
 Completion works for sub-commands and preset names.
 
@@ -204,6 +219,9 @@ core.toggle_format()
 
 -- Toggle severity
 core.toggle_severity()
+
+-- Toggle current_line
+core.toggle_current_line()
 ```
 
 Specify a existing preset:
@@ -218,6 +236,9 @@ core.toggle_format('long')
 
 -- Toggle severity to `warn`
 core.toggle_severity('warn')
+
+-- Toggle current_line to `true`
+core.toggle_current_line('true')
 ```
 
 ## Keymaps
@@ -229,6 +250,7 @@ keys = {
   { 'gts', ':DiagnosticToggle style<cr>', desc = 'Diagnostic toggle - style', silent = true },
   { 'gtf', ':DiagnosticToggle format<cr>', desc = 'Diagnostic toggle - format', silent = true },
   { 'gtv', ':DiagnosticToggle severity<cr>', desc = 'Diagnostic toggle - severity', silent = true },
+  { 'gtc', ':DiagnosticToggle current_line<cr>', desc = 'Diagnostic toggle - current_line', silent = true },
 },
 ```
 
@@ -239,12 +261,12 @@ keys = {
   { 'gts', function() require('diagnostic-toggle.core').toggle_style() end, desc = 'Diagnostic toggle - style' },
   { 'gtf', function() require('diagnostic-toggle.core').toggle_format() end, desc = 'Diagnostic toggle - format' },
   { 'gtv', function() require('diagnostic-toggle.core').toggle_severity() end, desc = 'Diagnostic toggle - severity' },
+  { 'gtc', function() require('diagnostic-toggle.core').toggle_current_line() end, desc = 'Diagnostic toggle - current_line' },
 },
 ```
 
 ## TODO
 
-- [ ] Add `current_line`
 - [ ] Add `:DiagnosticToggle reset` sub-command
 - [ ] Is `gt*` keymap proper?
 
