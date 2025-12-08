@@ -22,6 +22,7 @@ local defaults = {
       severity = true,
       current_line = true,
     },
+    on_reset = true,
   },
   presets = {
     styles = {

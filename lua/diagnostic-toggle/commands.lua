@@ -20,12 +20,14 @@ function M.add_commands()
       core.toggle_severity(value)
     elseif subcommand == "current_line" then
       core.toggle_current_line(value)
+    elseif subcommand == "reset" then
+      core.reset()
     else
       local msg = [[
 Usage:
-  DiagnosticToggle {style|format|severity}
+  DiagnosticToggle {style|format|severity|current_line|reset}
   or
-  DiagnosticToggle {style|format|severity} [value]
+  DiagnosticToggle {style|format|severity|current_line} [value]
 ]]
       util.notify(msg, "WARN")
     end
@@ -34,13 +36,9 @@ Usage:
     complete = function(arg_lead, cmdline, cursor_pos)
       local args = vim.split(cmdline, "%s+", { trimempty = true })
 
-      if #args <= 1 then
-        vim.notify(cmdline, vim.log.levels.INFO)
-        return { "style", "format", "severity", "current_line" }
-      end
+      if #args <= 1 then return { "style", "format", "severity", "current_line", "reset" } end
 
       if #args == 2 then
-        vim.notify(cmdline, vim.log.levels.INFO)
         local subcommand = args[2]
         local presets = config.options.presets
 
@@ -52,6 +50,8 @@ Usage:
           return vim.tbl_keys(presets.severities)
         elseif subcommand == "current_line" then
           return vim.tbl_keys(presets.current_lines)
+        elseif subcommand == "reset" then
+          return nil
         end
       end
 

@@ -68,7 +68,7 @@ local defaults = {
     severity = "all", -- Default severity name
     current_line = "false", -- Default current_line name
   },
-  sequences = { -- Toggle sequence maps. Example: when current is 'text_and_lines', next will be 'only_text'
+  sequences = { -- Toggle sequence maps
     style = { text_and_lines = "only_text", only_text = "only_lines", only_lines = "text_and_lines" }, -- text_and_lines -> only_text -> only_lines -> text_and_lines
     format = { short = "long", long = "short" }, -- short <-> long
     severitie = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" }, -- all -> info~ -> warn~ -> error~ -> all
@@ -82,6 +82,7 @@ local defaults = {
       format = true, -- Enable notify on toggling format
       severity = true, -- Enable notify on toggling severity
     },
+    on_reset = true, -- Enable notify on reset
   },
   presets = {
     styles = { -- `style` presets
@@ -180,6 +181,7 @@ Toggle presets:
 | `:DiagnosticToggle format`        | Toggle `format`        |
 | `:DiagnosticToggle severity`      | Toggle `severity`      |
 | `:DiagnosticToggle current_line`  | Toggle `current_line`  |
+| `:DiagnosticToggle reset`         | Reset to defaults      |
 
 Set a specific preset:
 | Command                                              | Description                               |
@@ -204,6 +206,7 @@ core.toggle_style()        -- Toggle style
 core.toggle_format()       -- Toggle foramt
 core.toggle_severity()     -- Toggle severity
 core.toggle_current_line() -- Toggle current_line
+core.reset()               -- Reset to defaults
 ```
 
 Set a specific preset:
@@ -226,6 +229,7 @@ keys = {
   { 'gtf', ':DiagnosticToggle format<cr>', desc = 'Diagnostic toggle - format', silent = true },
   { 'gtv', ':DiagnosticToggle severity<cr>', desc = 'Diagnostic toggle - severity', silent = true },
   { 'gtc', ':DiagnosticToggle current_line<cr>', desc = 'Diagnostic toggle - current_line', silent = true },
+  { 'gtr', ':DiagnosticToggle reset<cr>', desc = 'Diagnostic reset to defaults', silent = true },
 },
 ```
 
@@ -237,12 +241,12 @@ keys = {
   { 'gtf', function() require('diagnostic-toggle.core').toggle_format() end, desc = 'Diagnostic toggle - format' },
   { 'gtv', function() require('diagnostic-toggle.core').toggle_severity() end, desc = 'Diagnostic toggle - severity' },
   { 'gtc', function() require('diagnostic-toggle.core').toggle_current_line() end, desc = 'Diagnostic toggle - current_line' },
+  { 'gtr', function() require('diagnostic-toggle.core').reset() end, desc = 'Diagnostic reset to defaults' },
 },
 ```
 
 ## TODO
 
-- [ ] Add `:DiagnosticToggle defaults` sub-command
 - [ ] Is `gt*` keymap proper?
 
 

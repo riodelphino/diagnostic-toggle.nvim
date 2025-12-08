@@ -55,6 +55,14 @@ function M.toggle_current_line(current_line_name)
   util.notify_on_toggle("current_line", current_line_name)
 end
 
+---Reset to defaults
+function M.reset()
+  local opts = require("diagnostic-toggle.config").options
+  state.current = vim.deepcopy(opts.defaults)
+  M.apply_diagnostic_config()
+  if opts.notify.on_reset then util.notify("Reset to defaults", "INFO") end
+end
+
 ---Apply all current style/format/severity to diagnostic config
 function M.apply_diagnostic_config()
   local opts = require("diagnostic-toggle.config").options
