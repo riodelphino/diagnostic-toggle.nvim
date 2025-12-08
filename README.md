@@ -63,13 +63,13 @@ vim.diagnostic.config({
 ```lua
 local defaults = {
   defaults = {
-    style = "both", -- Default style name
+    style = "text_and_lines", -- Default style name
     format = "short", -- Default format name
     severity = "all", -- Default severity name
     current_line = "false", -- Default current_line name
   },
-  sequences = { -- Toggle sequence maps. Example: when current is 'both', next will be 'text'
-    style = { both = "text", text = "lines", lines = "both" },  -- both -> text -> lines -> both
+  sequences = { -- Toggle sequence maps. Example: when current is 'text_and_lines', next will be 'only_text'
+    style = { text_and_lines = "only_text", only_text = "only_lines", only_lines = "text_and_lines" }, -- text_and_lines -> only_text -> only_lines -> text_and_lines
     format = { short = "long", long = "short" }, -- short <-> long
     severitie = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" }, -- all -> info~ -> warn~ -> error~ -> all
     current_line = { ["false"] = "true", ["true"] = "false" }, -- false -> true -> false
@@ -85,7 +85,7 @@ local defaults = {
   },
   presets = {
     styles = { -- `style` presets
-      both = { -- Mixed style: Shows virtual_text for HINT/INFO/WARN. Shows virtual_lines for ERROR.
+      text_and_lines = { -- Mixed style: Shows virtual_text for HINT/INFO/WARN. Shows virtual_lines for ERROR.
         virtual_text = {
           format = "auto" -- Set "auto" to toggle on the fly
           severity = { max = vim.diagnostic.severity.WARN }, -- Fixed severity is also available.
@@ -96,7 +96,7 @@ local defaults = {
         },
         float = false, -- Set false to disable
       },
-      lines = { -- A style with virtual_lines only
+      only_lines = { -- A style with virtual_lines only
         virtual_text = false,
         virtual_lines = {
           format = "auto",
@@ -104,7 +104,7 @@ local defaults = {
         },
         float = false,
       },
-      text = { -- A style with virtual_text only
+      only_text = { -- A style with virtual_text only
         virtual_text = {
           format = "auto",
           severity = "auto",

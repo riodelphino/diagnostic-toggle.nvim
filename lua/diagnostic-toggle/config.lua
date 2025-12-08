@@ -2,13 +2,13 @@ local M = {}
 
 local defaults = {
   defaults = {
-    style = "both",
+    style = "text_and_lines",
     format = "short",
     severity = "all",
     current_line = "false",
   },
   sequences = {
-    style = { both = "text", text = "lines", lines = "both" },
+    style = { text_and_lines = "only_text", only_text = "only_lines", only_lines = "text_and_lines" },
     format = { short = "long", long = "short" },
     severity = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" },
     current_line = { ["false"] = "true", ["true"] = "false" },
@@ -25,7 +25,7 @@ local defaults = {
   },
   presets = {
     styles = {
-      both = {
+      text_and_lines = {
         virtual_text = {
           format = "auto",
           severity = { max = vim.diagnostic.severity.WARN },
@@ -38,7 +38,7 @@ local defaults = {
         },
         float = false,
       },
-      lines = {
+      only_lines = {
         virtual_text = false,
         virtual_lines = {
           format = "auto",
@@ -47,7 +47,7 @@ local defaults = {
         },
         float = false,
       },
-      text = {
+      only_text = {
         virtual_text = {
           format = "auto",
           severity = "auto",
