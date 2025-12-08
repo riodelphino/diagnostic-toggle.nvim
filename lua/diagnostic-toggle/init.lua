@@ -11,7 +11,7 @@ function M.setup(opts)
   config.options = vim.tbl_deep_extend("force", config.options, opts)
 
   -- Set style/format/severity with defaults
-  config.options.current = {}
+  -- state.current = {}
   local defaults = config.options.defaults
   core.toggle_style(defaults.style)
   core.toggle_format(defaults.format)
