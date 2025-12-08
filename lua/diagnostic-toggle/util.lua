@@ -18,7 +18,7 @@ end
 function M.notify_on_toggle(target, current_value)
   local opts = require("diagnostic-toggle.config").options
   if not opts.notify.on_toggle[target] then return end
-  local msg = string.format("Current %s: %s", target, current_value)
+  local msg = string.format("Set %s: %s", target, current_value)
   M.notify(msg, "INFO")
 end
 
