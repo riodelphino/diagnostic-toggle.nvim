@@ -12,6 +12,7 @@ function M.setup(opts)
 
   -- Set style/format/severity with defaults
   local defaults = config.options.defaults
+  state.current = vim.deepcopy(defaults)
   core.toggle_style(defaults.style)
   core.toggle_format(defaults.format)
   core.toggle_severity(defaults.severity)

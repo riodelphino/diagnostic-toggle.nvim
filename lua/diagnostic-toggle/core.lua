@@ -12,8 +12,8 @@ function M.toggle_style(style_name)
     style_name = toggle_map[state.current.style]
   end
   state.current.style = style_name
-  M.apply_diagnostic_config()
-  util.notify_on_toggle("style", style_name)
+  local ok = M.apply_diagnostic_config()
+  if ok then util.notify_on_toggle("style", style_name) end
 end
 
 ---Toggle or set format
@@ -25,8 +25,8 @@ function M.toggle_format(format_name)
     format_name = toggle_map[state.current.format]
   end
   state.current.format = format_name
-  M.apply_diagnostic_config()
-  util.notify_on_toggle("format", format_name)
+  local ok = M.apply_diagnostic_config()
+  if ok then util.notify_on_toggle("format", format_name) end
 end
 
 ---Toggle or set severity
@@ -38,8 +38,8 @@ function M.toggle_severity(severity_name)
     severity_name = toggle_map[state.current.severity]
   end
   state.current.severity = severity_name
-  M.apply_diagnostic_config()
-  util.notify_on_toggle("severity", severity_name)
+  local ok = M.apply_diagnostic_config()
+  if ok then util.notify_on_toggle("severity", severity_name) end
 end
 
 ---Toggle or set current_line
@@ -51,38 +51,66 @@ function M.toggle_current_line(current_line_name)
     current_line_name = toggle_map[state.current.current_line]
   end
   state.current.current_line = current_line_name
-  M.apply_diagnostic_config()
-  util.notify_on_toggle("current_line", current_line_name)
+  local ok = M.apply_diagnostic_config()
+  if ok then util.notify_on_toggle("current_line", current_line_name) end
 end
 
 ---Reset to defaults
 function M.reset()
   local opts = require("diagnostic-toggle.config").options
   state.current = vim.deepcopy(opts.defaults)
-  M.apply_diagnostic_config()
-  if opts.notify.on_reset then util.notify("Reset to defaults", "INFO") end
+  local ok = M.apply_diagnostic_config()
+  if ok then
+    if opts.notify.on_reset then util.notify("Reset to defaults", "INFO") end
+  end
 end
 
 ---Apply all current style/format/severity to diagnostic config
+---@return boolean? ok
 function M.apply_diagnostic_config()
   local opts = require("diagnostic-toggle.config").options
   local presets = opts.presets
-  local style = vim.deepcopy(presets.styles[state.current.style])
+
+  local new_style = vim.deepcopy(presets.styles[state.current.style])
+  local new_format = presets.formats[state.current.format]
+  local new_severity = presets.severities[state.current.severity]
+  local new_current_line = presets.current_lines[state.current.current_line]
+
+  if new_style == nil then
+    local msg = string.format("style '%s' not found.", state.current.style)
+    util.notify(msg, "ERROR")
+    return false
+  end
+  if new_format == nil then
+    local msg = string.format("format '%s' not found.", state.current.format)
+    util.notify(msg, "ERROR")
+    return false
+  end
+  if new_severity == nil then
+    local msg = string.format("severity '%s' not found.", state.current.severity)
+    util.notify(msg, "ERROR")
+    return false
+  end
+  if new_current_line == nil then
+    local msg = string.format("current_line '%s' not found.", state.current.current_line)
+    util.notify(msg, "ERROR")
+    return false
+  end
+
   -- Replace format and severity dynamically
   for _, target in ipairs({ "virtual_text", "virtual_lines", "float" }) do
-    if style[target] then
-      if style[target].format and style[target].format == "auto" then
-        style[target].format = presets.formats[state.current.format]
+    if new_style[target] then
+      if new_style[target].format and new_style[target].format == "auto" then new_style[target].format = new_format end
+      if new_style[target].severity and new_style[target].severity == "auto" then
+        new_style[target].severity = new_severity
       end
-      if style[target].severity and style[target].severity == "auto" then
-        style[target].severity = presets.severities[state.current.severity]
-      end
-      if style[target].current_line and style[target].current_line == "auto" then
-        style[target].current_line = presets.current_lines[state.current.current_line]
+      if new_style[target].current_line and new_style[target].current_line == "auto" then
+        new_style[target].current_line = new_current_line
       end
     end
   end
-  vim.diagnostic.config(style)
+  vim.diagnostic.config(new_style)
+  return true
 end
 
 return M
