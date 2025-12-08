@@ -139,7 +139,7 @@ local defaults = {
 
 ### Enable Toggling
 
-Use `"auto"` for toggling `format` and `severity` in your config
+Use `"auto"` for toggling `format`, `severity`, `current_line` in your config
 ```lua
 require('diagnostic-toggle').setup({
   styles = {
@@ -195,38 +195,24 @@ Completion works for sub-commands and preset names.
 
 Equivalant functions are available.
 
-Toggle between presets:
+Toggle presets:
 ```lua
 local core = require('diagnostic-toggle.core')
 
--- Toggle style
-core.toggle_style()
-
--- Toggle foramt
-core.toggle_format()
-
--- Toggle severity
-core.toggle_severity()
-
--- Toggle current_line
-core.toggle_current_line()
+core.toggle_style()        -- Toggle style
+core.toggle_format()       -- Toggle foramt
+core.toggle_severity()     -- Toggle severity
+core.toggle_current_line() -- Toggle current_line
 ```
 
-Specify a existing preset:
+Set a specific preset:
 ```lua
 local core = require('diagnostic-toggle.core')
 
--- Toggle style to `lines`
-core.toggle_style('lines')
-
--- Toggle foramt to `long`
-core.toggle_format('long')
-
--- Toggle severity to `warn`
-core.toggle_severity('warn')
-
--- Toggle current_line to `true`
-core.toggle_current_line('true')
+core.toggle_style('lines')       -- Set style to `lines`
+core.toggle_format('long')       -- Set foramt to `long`
+core.toggle_severity('warn')     -- Set severity to `warn`
+core.toggle_current_line('true') -- Set current_line to `true`
 ```
 
 ## Keymaps
