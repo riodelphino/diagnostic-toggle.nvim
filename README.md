@@ -14,7 +14,7 @@ If you're usin the built-in diagnostics, this might be a good option.
 
 You can toggle these aspects independently:
 
-- Style — Presets combining `virtual_text`|`virtual_lines`|`float` diagnostics
+- Style — Presets combining `virtual_text`|`virtual_lines`|`float` and other `vim.diagnostic.Opts` fields
 - Format — How diagnostic messages are displayed
 - Severity — Which severities are shown
 - current_line — Whether to show diagnostics only on the cursor line
@@ -71,7 +71,7 @@ local defaults = {
   sequences = { -- Toggle sequence maps
     style = { text_and_lines = "only_text", only_text = "only_lines", only_lines = "text_and_lines" }, -- text_and_lines -> only_text -> only_lines -> text_and_lines
     format = { simple = "detailed", detailed = "simple" }, -- simple <-> detailed
-    severitie = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" }, -- all -> info~ -> warn~ -> error~ -> all
+    severity = { all = "info~", ["info~"] = "warn~", ["warn~"] = "error~", ["error~"] = "all" }, -- all -> info~ -> warn~ -> error~ -> all
     current_line = { ["false"] = "true", ["true"] = "false" }, -- false -> true -> false
   },
   notify = { -- Notify settings
