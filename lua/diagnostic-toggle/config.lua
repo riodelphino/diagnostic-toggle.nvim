@@ -1,5 +1,6 @@
 local M = {}
 
+---@type diagnostic-toggle.Opts
 local defaults = {
   defaults = {
     style = "text_and_lines",

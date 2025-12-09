@@ -67,17 +67,11 @@ local diagnostics = {}
 
 for _, d in ipairs(diagnostic_items) do
   local lnum, col, end_col, severity, message, code = unpack(d)
-  severities = {
-    HINT = vim.diagnostic.severity.HINT,
-    INFO = vim.diagnostic.severity.INFO,
-    WARN = vim.diagnostic.severity.WARN,
-    ERROR = vim.diagnostic.severity.ERROR,
-  }
   table.insert(diagnostics, {
     lnum = lnum,
     col = col,
     end_col = end_col,
-    severity = severities[severity],
+    severity = vim.diagnostic.severity[severity],
     message = message,
     source = source,
     code = code,

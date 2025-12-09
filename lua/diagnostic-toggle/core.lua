@@ -71,10 +71,10 @@ function M.apply_diagnostic_config()
   local opts = require("diagnostic-toggle.config").options
   local presets = opts.presets
 
-  local new_style = vim.deepcopy(presets.styles[state.current.style])
-  local new_format = presets.formats[state.current.format]
-  local new_severity = presets.severities[state.current.severity]
-  local new_current_line = presets.current_lines[state.current.current_line]
+  local new_style = vim.deepcopy(presets.styles[state.current.style]) ---@type diagnostic-toggle.Style?
+  local new_format = presets.formats[state.current.format] ---@type diagnostic-toggle.Format?
+  local new_severity = presets.severities[state.current.severity] ---@type diagnostic-toggle.Severity?
+  local new_current_line = presets.current_lines[state.current.current_line] ---@type diagnostic-toggle.CurrentLine?
 
   if new_style == nil then
     local msg = string.format("style '%s' not found.", state.current.style)
@@ -98,9 +98,10 @@ function M.apply_diagnostic_config()
   end
 
   -- Evaluate functions
-  if type(new_style) == "function" then new_style = new_style() end
-  if type(new_severity) == "function" then new_severity = new_severity() end
-  if type(new_current_line) == "function" then new_current_line = new_current_line() end
+  if type(new_style) == "function" then new_style = new_style(state) end
+  if type(new_severity) == "function" then new_severity = new_severity(state) end
+  if type(new_current_line) == "function" then new_current_line = new_current_line(state) end
+
   -- Should not evaluate `format` field, because it requires function type itself.
 
   -- Replace format and severity dynamically

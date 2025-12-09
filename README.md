@@ -145,6 +145,7 @@ Use `"auto"` for toggling `format`, `severity`, `current_line` in your config
 ```lua
 require('diagnostic-toggle').setup({
   styles = {
+    ---@type diagnostic-toggle.Style
     your_style = {
       virtual_text = {
         format = "auto", -- Allow toggling format on the fly
@@ -162,6 +163,7 @@ To disable specific field, use `false` instead of `nil`:
 ```lua
 require('diagnostic-toggle').setup({
   styles = {
+    ---@type diagnostic-toggle.Style
     your_style = {
       virtual_text = { format = "auto" },
       virtual_lines = false, -- Disabled
@@ -188,7 +190,8 @@ As mentioned above, the `function` type is also allowed in `style`, `severity` a
 Set a function to style:
 ```lua
 styles = {
-  your_style = function()
+  ---@type diagnostic-toggle.Style
+  your_style = function(state)
     return {
       virtual_text = {
         format = "auto",
@@ -202,16 +205,46 @@ styles = {
 },
 ```
 
+Set a function to severity:
+```lua
+severities = {
+  ---@type diagnostic-toggle.Severity
+  your_severity = function(state)
+    if {condition} then
+      return { min = vim.diagnostic.severity.INFO }
+    else
+      return { min = vim.diagnostic.severity.WARN }
+    end
+  end,
+},
+```
+
 Set a function to current_line:
 ```lua
 current_lines = {
-  your_current_line = function()
+  ---@type diagnostic-toggle.CurrentLine
+  your_current_line = function(state)
     if {condition} then
       return true
     else
       return false
     end
   end,
+}
+```
+
+The fields of `state`:
+```lua
+---@type diagnostic-toggle.State
+state = {
+  is_setup = false, -- `true` when in setup()
+  is_toggle = false, -- Not used
+  current = { -- The followings will be set after setup()
+    style = nil, -- Current style name
+    format = nil, -- current format name
+    severity = nil, -- Current severity name
+    current_line = nil, -- Current current_line name
+  },
 }
 ```
 

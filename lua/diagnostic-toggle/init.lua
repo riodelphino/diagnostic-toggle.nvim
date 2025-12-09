@@ -1,3 +1,4 @@
+require("diagnostic-toggle.type")
 local config = require("diagnostic-toggle.config")
 local core = require("diagnostic-toggle.core")
 local state = require("diagnostic-toggle.state")
