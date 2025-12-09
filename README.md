@@ -295,9 +295,9 @@ Set a specific preset:
 ```lua
 local core = require('diagnostic-toggle.core')
 
-core.toggle_style('lines')       -- Set style to `lines`
+core.toggle_style('only_lines')  -- Set style to `only_lines`
 core.toggle_format('detailed')   -- Set foramt to `detailed`
-core.toggle_severity('warn')     -- Set severity to `warn`
+core.toggle_severity('warn~')    -- Set severity to `warn~`
 core.toggle_current_line('true') -- Set current_line to `true`
 ```
 
