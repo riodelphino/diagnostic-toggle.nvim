@@ -97,6 +97,12 @@ function M.apply_diagnostic_config()
     return false
   end
 
+  -- Evaluate functions
+  if type(new_style) == "function" then new_style = new_style() end
+  if type(new_severity) == "function" then new_severity = new_severity() end
+  if type(new_current_line) == "function" then new_current_line = new_current_line() end
+  -- Should not evaluate `format` field, because it requires function type itself.
+
   -- Replace format and severity dynamically
   for _, target in ipairs({ "virtual_text", "virtual_lines", "float" }) do
     if new_style[target] then

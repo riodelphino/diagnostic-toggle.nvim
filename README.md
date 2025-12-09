@@ -171,6 +171,51 @@ require('diagnostic-toggle').setup({
 })
 ```
 
+### Type of the Fields in presets
+
+Allowed types for each fields:
+| Field          | vim.diagnostic.Opts | diagnostic-toggle.nvim  |
+| -------------- | ------------------- | ----------------------- |
+| `style`        | -                   | `table` or `function`   |
+| `format`       | `function`          | `function`              |
+| `severity`     | `table`             | `table` or `function`   |
+| `current_line` | `boolean`           | `boolean` or `function` |
+
+### Set Functions to the Fields
+
+As mentioned above, the `function` type is also allowed in `style`, `severity` and `current_line` fields.
+
+Set a function to style:
+```lua
+styles = {
+  your_style = function()
+    return {
+      virtual_text = {
+        format = "auto",
+        severity = "auto",
+        current_line = "auto",
+      },
+      virtual_lines = false,
+      float = false,
+    }
+  end,
+},
+```
+
+Set a function to current_line:
+```lua
+current_lines = {
+  your_current_line = function()
+    if {condition} then
+      return true
+    else
+      return false
+    end
+  end,
+}
+```
+
+
 ## Commands
 
 Toggle presets:
