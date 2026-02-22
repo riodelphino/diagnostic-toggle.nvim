@@ -312,24 +312,24 @@ core.reset() -- Reset to defaults
 Recommended keymaps for lazy.nvim:
 ```lua
 keys = {
-  { 'glt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
-  { 'gls', ':DiagnosticToggle style<cr>', desc = 'Diagnostic toggle - style', silent = true },
-  { 'glf', ':DiagnosticToggle format<cr>', desc = 'Diagnostic toggle - format', silent = true },
-  { 'glv', ':DiagnosticToggle severity<cr>', desc = 'Diagnostic toggle - severity', silent = true },
-  { 'glc', ':DiagnosticToggle current_line<cr>', desc = 'Diagnostic toggle - current_line', silent = true },
-  { 'glr', ':DiagnosticToggle reset<cr>', desc = 'Diagnostic reset to defaults', silent = true },
+  { '<leader>glt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
+  { '<leader>gls', ':DiagnosticToggle style<cr>', desc = 'Diagnostic toggle - style', silent = true },
+  { '<leader>glf', ':DiagnosticToggle format<cr>', desc = 'Diagnostic toggle - format', silent = true },
+  { '<leader>glv', ':DiagnosticToggle severity<cr>', desc = 'Diagnostic toggle - severity', silent = true },
+  { '<leader>glc', ':DiagnosticToggle current_line<cr>', desc = 'Diagnostic toggle - current_line', silent = true },
+  { '<leader>glr', ':DiagnosticToggle reset<cr>', desc = 'Diagnostic reset to defaults', silent = true },
 },
 ```
 
 Equivalent keymaps with API:
 ```lua
 keys = {
-  { 'glt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
-  { 'gls', function() require('diagnostic-toggle.core').toggle_style() end, desc = 'Diagnostic toggle - style' },
-  { 'glf', function() require('diagnostic-toggle.core').toggle_format() end, desc = 'Diagnostic toggle - format' },
-  { 'glv', function() require('diagnostic-toggle.core').toggle_severity() end, desc = 'Diagnostic toggle - severity' },
-  { 'glc', function() require('diagnostic-toggle.core').toggle_current_line() end, desc = 'Diagnostic toggle - current_line' },
-  { 'glr', function() require('diagnostic-toggle.core').reset() end, desc = 'Diagnostic reset to defaults' },
+  { '<leader>glt', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = 'Toggle Diagnostic Enabled' },
+  { '<leader>gls', function() require('diagnostic-toggle.core').toggle_style() end, desc = 'Diagnostic toggle - style' },
+  { '<leader>glf', function() require('diagnostic-toggle.core').toggle_format() end, desc = 'Diagnostic toggle - format' },
+  { '<leader>glv', function() require('diagnostic-toggle.core').toggle_severity() end, desc = 'Diagnostic toggle - severity' },
+  { '<leader>glc', function() require('diagnostic-toggle.core').toggle_current_line() end, desc = 'Diagnostic toggle - current_line' },
+  { '<leader>glr', function() require('diagnostic-toggle.core').reset() end, desc = 'Diagnostic reset to defaults' },
 },
 ```
 
